@@ -37,29 +37,3 @@ class MockUserRepository extends _i1.Mock implements _i3.UserRepository {
               Future<_i2.DataPage<_i5.User>>.value(_FakeDataPage_0<_i5.User>()))
       as _i4.Future<_i2.DataPage<_i5.User>>);
 }
-
-/// A class which mocks [User].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockUser extends _i1.Mock implements _i5.User {
-  MockUser() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  int get id =>
-      (super.noSuchMethod(Invocation.getter(#id), returnValue: 0) as int);
-  @override
-  String get name =>
-      (super.noSuchMethod(Invocation.getter(#name), returnValue: '') as String);
-  @override
-  String get email =>
-      (super.noSuchMethod(Invocation.getter(#email), returnValue: '')
-          as String);
-  @override
-  _i5.Gender get gender => (super.noSuchMethod(Invocation.getter(#gender),
-      returnValue: _i5.Gender.male) as _i5.Gender);
-  @override
-  _i5.Status get status => (super.noSuchMethod(Invocation.getter(#status),
-      returnValue: _i5.Status.active) as _i5.Status);
-}
