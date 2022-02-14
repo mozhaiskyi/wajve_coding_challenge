@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wajve_coding_challenge/data/network/dto/get_users_result.dart';
-import 'package:wajve_coding_challenge/data/network/user_api_service.dart';
+import 'package:wajve_coding_challenge/domain/model/page.dart';
+import 'package:wajve_coding_challenge/domain/repository/user_repository.dart';
 import 'package:wajve_coding_challenge/provider.dart';
+
+import 'domain/model/user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,13 +35,13 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final apiService = Provider.of<UserApiService>(context);
+    final userRepository = Provider.of<UserRepository>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
       ),
-      body: FutureBuilder<GetUsersResult>(
-        future: apiService.getUsers(page: 1),
+      body: FutureBuilder<DataPage<User>>(
+        future: userRepository.getUsers(1),
         builder: (_, snapshot) {
           if (snapshot.hasData) {
             return Center(child: Text(snapshot.data!.data.length.toString()));
