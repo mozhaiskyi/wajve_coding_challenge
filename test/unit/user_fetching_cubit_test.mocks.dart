@@ -2,13 +2,13 @@
 // in wajve_coding_challenge/test/unit/user_fetching_cubit_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:wajve_coding_challenge/domain/model/page.dart' as _i2;
-import 'package:wajve_coding_challenge/domain/model/user.dart' as _i5;
+import 'package:wajve_coding_challenge/domain/model/user.dart' as _i3;
 import 'package:wajve_coding_challenge/domain/repository/user_repository.dart'
-    as _i3;
+    as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -22,18 +22,25 @@ import 'package:wajve_coding_challenge/domain/repository/user_repository.dart'
 
 class _FakeDataPage_0<T> extends _i1.Fake implements _i2.DataPage<T> {}
 
+class _FakeUser_1 extends _i1.Fake implements _i3.User {}
+
 /// A class which mocks [UserRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUserRepository extends _i1.Mock implements _i3.UserRepository {
+class MockUserRepository extends _i1.Mock implements _i4.UserRepository {
   MockUserRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.DataPage<_i5.User>> getUsers(int? page) => (super.noSuchMethod(
+  _i5.Future<_i2.DataPage<_i3.User>> getUsers(int? page) => (super.noSuchMethod(
           Invocation.method(#getUsers, [page]),
           returnValue:
-              Future<_i2.DataPage<_i5.User>>.value(_FakeDataPage_0<_i5.User>()))
-      as _i4.Future<_i2.DataPage<_i5.User>>);
+              Future<_i2.DataPage<_i3.User>>.value(_FakeDataPage_0<_i3.User>()))
+      as _i5.Future<_i2.DataPage<_i3.User>>);
+  @override
+  _i5.Future<_i3.User> getUserById(int? id) =>
+      (super.noSuchMethod(Invocation.method(#getUserById, [id]),
+              returnValue: Future<_i3.User>.value(_FakeUser_1()))
+          as _i5.Future<_i3.User>);
 }

@@ -18,4 +18,10 @@ class UserRepositoryImpl extends UserRepository {
       result.data.map(user_mapper.map).toList(growable: false),
     );
   }
+
+  @override
+  Future<User> getUserById(int id) async {
+    final result = await apiService.getUserById(id: id);
+    return user_mapper.map(result.data);
+  }
 }
