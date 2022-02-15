@@ -6,8 +6,14 @@ import 'package:wajve_coding_challenge/view/user_browser/user_widget.dart';
 class UserBrowserContentWidget extends StatelessWidget {
   final Content content;
   final Function()? onScrolledBottom;
+  final Function(User)? onUserClicked;
 
-  const UserBrowserContentWidget({Key? key, required this.content, this.onScrolledBottom}) : super(key: key);
+  const UserBrowserContentWidget({
+    Key? key,
+    required this.content,
+    this.onScrolledBottom,
+    this.onUserClicked,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +27,16 @@ class UserBrowserContentWidget extends StatelessWidget {
           final batch = content.batches[index];
           return Column(
             children: [
-              _UserBatchWidget(title: 'Active', users: batch.active),
-              _UserBatchWidget(title: 'Inactive', users: batch.inactive),
+              _UserBatchWidget(
+                title: 'Active',
+                users: batch.active,
+                onUserClicked: onUserClicked,
+              ),
+              _UserBatchWidget(
+                title: 'Inactive',
+                users: batch.inactive,
+                onUserClicked: onUserClicked,
+              ),
             ],
           );
         }
@@ -67,8 +81,14 @@ class _NextPageLoaderWidget extends StatelessWidget {
 class _UserBatchWidget extends StatelessWidget {
   final String title;
   final List<User> users;
+  final Function(User)? onUserClicked;
 
-  const _UserBatchWidget({Key? key, required this.title, required this.users}) : super(key: key);
+  const _UserBatchWidget({
+    Key? key,
+    required this.title,
+    required this.users,
+    this.onUserClicked,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +121,10 @@ class _UserBatchWidget extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: users.length,
-                itemBuilder: (_, index) => UserWidget(user: users[index]),
+                itemBuilder: (_, index) => UserWidget(
+                  user: users[index],
+                  onClicked: () => onUserClicked?.call(users[index]),
+                ),
               ),
             ),
           )
