@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:wajve_coding_challenge/domain/bloc/user_fetching_cubit.dart';
+import 'package:wajve_coding_challenge/domain/model/user.dart';
 import 'package:wajve_coding_challenge/domain/repository/user_repository.dart';
 import 'package:wajve_coding_challenge/view/user_browser/user_browser_content_widget.dart';
 import 'package:wajve_coding_challenge/view/user_browser/user_browser_error_widget.dart';
 import 'package:wajve_coding_challenge/view/user_browser/user_browser_loading_widget.dart';
 
 class UserBrowserScreen extends StatelessWidget {
-  const UserBrowserScreen({Key? key}) : super(key: key);
+  final Function(User)? onUserClicked;
+
+  const UserBrowserScreen({Key? key, this.onUserClicked}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +45,7 @@ class UserBrowserScreen extends StatelessWidget {
                 onScrolledBottom: () {
                   BlocProvider.of<UserFetchingCubit>(context).loadNextPage();
                 },
+                onUserClicked: onUserClicked,
               );
               default: throw Exception('Unsupported state type ${state.runtimeType}');
             }
