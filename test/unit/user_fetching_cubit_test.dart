@@ -1,14 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:wajve_coding_challenge/domain/bloc/user_fetching_cubit.dart';
 import 'package:wajve_coding_challenge/domain/model/page.dart';
 import 'package:wajve_coding_challenge/domain/model/user.dart';
-import 'package:wajve_coding_challenge/domain/repository/user_repository.dart';
 
-import 'user_fetching_cubit_test.mocks.dart';
+import '../data/test_data.dart';
+import '../mocks/mocks.mocks.dart';
 
-@GenerateMocks([UserRepository])
 void main() {
   final userRepository = MockUserRepository();
 
@@ -30,7 +28,7 @@ void main() {
     test('The state contains one batch after loadNextPage() call', () async {
       final cubit = UserFetchingCubit(userRepository: userRepository);
 
-      final dataPage = _generatePage(1, 100, 20, () => _testActiveUser);
+      final dataPage = generatePage(1, 100, 20, (_) => testActiveUser);
       when(userRepository.getUsers(1)).thenAnswer((_) => Future.value(dataPage));
 
       await cubit.loadNextPage();
@@ -44,8 +42,8 @@ void main() {
     test('The state contains valid hasNextPage after loadNextPage() call', () async {
       final cubit = UserFetchingCubit(userRepository: userRepository);
 
-      final dataPage1 = _generatePage(1, 2, 20, () => _testActiveUser);
-      final dataPage2 = _generatePage(2, 2, 20, () => _testActiveUser);
+      final dataPage1 = generatePage(1, 2, 20, (_) => testActiveUser);
+      final dataPage2 = generatePage(2, 2, 20, (_) => testActiveUser);
       when(userRepository.getUsers(1)).thenAnswer((_) => Future.value(dataPage1));
       when(userRepository.getUsers(2)).thenAnswer((_) => Future.value(dataPage2));
 
@@ -62,7 +60,7 @@ void main() {
     test('The state is Content with empty batch when data does not exist', () async {
       final cubit = UserFetchingCubit(userRepository: userRepository);
 
-      final dataPage = _generatePage(1, 1, 0, () => _testActiveUser);
+      final dataPage = generatePage(1, 1, 0, (_) => testActiveUser);
       when(userRepository.getUsers(1)).thenAnswer((_) => Future.value(dataPage));
 
       await cubit.loadNextPage();
@@ -76,8 +74,8 @@ void main() {
     test('The state contains valid batches after loadNextPage() call', () async {
       final cubit = UserFetchingCubit(userRepository: userRepository);
 
-      final dataPage1 = _generatePage(1, 2, 20, () => _testActiveUser);
-      final dataPage2 = _generatePage(2, 2, 20, () => _testActiveUser);
+      final dataPage1 = generatePage(1, 2, 20, (_) => testActiveUser);
+      final dataPage2 = generatePage(2, 2, 20, (_) => testActiveUser);
       when(userRepository.getUsers(1)).thenAnswer((_) => Future.value(dataPage1));
       when(userRepository.getUsers(2)).thenAnswer((_) => Future.value(dataPage2));
 
@@ -108,7 +106,7 @@ void main() {
     test('Users with unknown status are ignored', () async {
       final cubit = UserFetchingCubit(userRepository: userRepository);
 
-      final dataPage = _generatePage(1, 1, 20, () => _testUnknownUser);
+      final dataPage = generatePage(1, 1, 20, (_) => testUnknownUser);
       when(userRepository.getUsers(1)).thenAnswer((_) => Future.value(dataPage));
 
       await cubit.loadNextPage();
@@ -123,12 +121,12 @@ void main() {
       final cubit = UserFetchingCubit(userRepository: userRepository);
 
       final users = [
-        _testActiveUser,
-        _testActiveUser,
-        _testInactiveUser,
-        _testInactiveUser,
-        _testUnknownUser,
-        _testUnknownUser,
+        testActiveUser,
+        testActiveUser,
+        testInactiveUser,
+        testInactiveUser,
+        testUnknownUser,
+        testUnknownUser,
       ];
       final dataPage = DataPage(1, 1, users);
       when(userRepository.getUsers(1)).thenAnswer((_) => Future.value(dataPage));
@@ -141,13 +139,4 @@ void main() {
       expect((cubit.state as Content).batches[0].active.length, 2);
     });
   });
-}
-
-User get _testActiveUser => User(0, 'test', 'test', Gender.unknown, Status.active);
-User get _testInactiveUser => User(0, 'test', 'test', Gender.unknown, Status.inactive);
-User get _testUnknownUser => User(0, 'test', 'test', Gender.unknown, Status.unknown);
-
-DataPage<User> _generatePage(int page, int pages, int length, User Function() generator) {
-  final data = List.generate(length, (_) => generator(), growable: false);
-  return DataPage(page, pages, data);
 }

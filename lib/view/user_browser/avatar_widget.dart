@@ -19,6 +19,7 @@ class AvatarWidget extends StatelessWidget {
         children: [
           Positioned.fill(
             child: CircleAvatar(
+              key: const ValueKey('circle_avatar'),
               backgroundColor: color_generator.generateColorFromText(name),
               child: Center(
                 child: Text(
