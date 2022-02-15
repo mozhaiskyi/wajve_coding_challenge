@@ -18,11 +18,12 @@ class UserBrowserContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      key: const ValueKey('users_list_widget'),
       itemCount: content.hasNextPage ? content.batches.length + 1 : content.batches.length,
       itemBuilder: (_, index) {
         if (index == content.batches.length) {
           onScrolledBottom?.call();
-          return const _NextPageLoaderWidget();
+          return const _NextPageLoaderWidget(key: ValueKey('next_page_loader_widget'));
         } else {
           final batch = content.batches[index];
           return Column(
