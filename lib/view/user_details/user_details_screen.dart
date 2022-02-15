@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:wajve_coding_challenge/domain/model/user.dart';
 
 class UserDetailsScreen extends StatelessWidget {
   final int id;
+  final User? payload;
 
-  const UserDetailsScreen({Key? key, required this.id}) : super(key: key);
+  const UserDetailsScreen({Key? key, required this.id, this.payload}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('Hello world!'),
+        child: Text(id.toString()),
       ),
     );
   }
