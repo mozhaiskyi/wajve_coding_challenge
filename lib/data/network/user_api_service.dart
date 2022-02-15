@@ -17,7 +17,8 @@ class UserApiServiceImpl extends UserApiService {
 
   @override
   Future<GetUsersResult> getUsers({required int page}) async {
-    final uri = Uri.https(baseUrl, '$apiVersion/users');
+    final queryParams = {'page': page.toString()};
+    final uri = Uri.https(baseUrl, '$apiVersion/users', queryParams);
     final response = await client.get(uri);
     final json = convert.jsonDecode(response.body) as Map<String, dynamic>;
     return GetUsersResult.fromJson(json);
