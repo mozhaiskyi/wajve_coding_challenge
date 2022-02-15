@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wajve_coding_challenge/domain/bloc/user_fetching_cubit.dart';
 import 'package:wajve_coding_challenge/domain/model/user.dart';
+import 'package:wajve_coding_challenge/view/user_browser/user_widget.dart';
 
 class UserBrowserContentWidget extends StatelessWidget {
   final Content content;
@@ -100,23 +101,12 @@ class _UserBatchWidget extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: users.length,
-                itemBuilder: (_, index) => _UserWidget(user: users[index]),
+                itemBuilder: (_, index) => UserWidget(user: users[index]),
               ),
             ),
           )
         ],
       );
     }
-  }
-}
-
-class _UserWidget extends StatelessWidget {
-  final User user;
-
-  const _UserWidget({Key? key, required this.user}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(user.name);
   }
 }
