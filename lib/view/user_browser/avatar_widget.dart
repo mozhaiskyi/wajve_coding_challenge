@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wajve_coding_challenge/domain/model/user.dart';
 import 'package:wajve_coding_challenge/view/user_browser/gender_widget.dart';
 import 'package:wajve_coding_challenge/view/util/color_generator.dart' as color_generator;
+import 'package:wajve_coding_challenge/view/util/initial_generator.dart' as initials_generator;
 
 class AvatarWidget extends StatelessWidget {
   final String name;
@@ -12,6 +13,8 @@ class AvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = color_generator.generateColorFromText(name);
+    final textColor = color_generator.generateTextColorBasedOnBackgroundColor(backgroundColor);
     return SizedBox(
       height: size,
       width: size,
@@ -20,14 +23,14 @@ class AvatarWidget extends StatelessWidget {
           Positioned.fill(
             child: CircleAvatar(
               key: const ValueKey('circle_avatar'),
-              backgroundColor: color_generator.generateColorFromText(name),
+              backgroundColor: backgroundColor,
               child: Center(
                 child: Text(
-                  name[0].toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 18,
+                  initials_generator.generateInitialFromName(name: name),
+                  style: TextStyle(
+                    fontSize: size / 3,
                     fontWeight: FontWeight.normal,
-                    color: Colors.white,
+                    color: textColor,
                   ),
                 ),
               ),
