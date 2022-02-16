@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Color generateColorFromText(String text){
+Color generateColorFromText(String text) {
   var hash = 0;
   for (var i = 0; i < text.length; i++) {
     hash = text.codeUnitAt(i)+ ((hash << 5) - hash);
@@ -11,4 +11,9 @@ Color generateColorFromText(String text){
   final green = ((finalHash & 0xFF));
 
   return Color.fromRGBO(red, green, blue, 1);
+}
+
+Color generateTextColorBasedOnBackgroundColor(Color backgroundColor) {
+  final lightness = HSLColor.fromColor(backgroundColor).lightness;
+  return lightness < 0.7 ? Colors.white : Colors.black;
 }
